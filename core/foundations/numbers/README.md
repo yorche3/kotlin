@@ -15,9 +15,9 @@ Tres enfoques de implementación para los mismos 5 algoritmos: **recursivo direc
 | [`gradle.properties`](gradle.properties) | Opciones de Gradle (estilo de código oficial de Kotlin, memoria del daemon). |
 | [`.gitignore`](.gitignore) | Ignora `build/`, `.gradle/` y `.kotlin/` (salidas de Gradle). |
 | [`src/main/kotlin/numbers/Numbers.kt`](src/main/kotlin/numbers/Numbers.kt) | `object Numbers` — 15 funciones (3 enfoques × 5 algoritmos) + 4 helpers `private tailrec`. |
-| [`src/test/kotlin/numbers/NumbersRecursiveTest.kt`](src/test/kotlin/numbers/NumbersRecursiveTest.kt) | Suite recursiva: 11 casos. |
-| [`src/test/kotlin/numbers/NumbersRecursiveWithAccumulatorTest.kt`](src/test/kotlin/numbers/NumbersRecursiveWithAccumulatorTest.kt) | Suite con acumulador: 11 casos. |
-| [`src/test/kotlin/numbers/NumbersIterativeTest.kt`](src/test/kotlin/numbers/NumbersIterativeTest.kt) | Suite iterativa: 11 casos. |
+| [`src/test/kotlin/numbers/NumbersRecursiveTest.kt`](src/test/kotlin/numbers/NumbersRecursiveTest.kt) | Suite recursiva: 5 tests (11 casos). |
+| [`src/test/kotlin/numbers/NumbersRecursiveWithAccumulatorTest.kt`](src/test/kotlin/numbers/NumbersRecursiveWithAccumulatorTest.kt) | Suite con acumulador: 5 tests (11 casos). |
+| [`src/test/kotlin/numbers/NumbersIterativeTest.kt`](src/test/kotlin/numbers/NumbersIterativeTest.kt) | Suite iterativa: 5 tests (11 casos). |
 
 **Estructura de directorios esperada:**
 
@@ -31,9 +31,9 @@ numbers/
 │   ├── main/kotlin/numbers/
 │   │   └── Numbers.kt                           # 15 funciones + 4 helpers tailrec
 │   └── test/kotlin/numbers/
-│       ├── NumbersRecursiveTest.kt              # Tests recursivos (11 casos)
-│       ├── NumbersRecursiveWithAccumulatorTest.kt  # Tests con acumulador (11 casos)
-│       └── NumbersIterativeTest.kt              # Tests iterativos (11 casos)
+│       ├── NumbersRecursiveTest.kt              # Tests recursivos (5 tests, 11 casos)
+│       ├── NumbersRecursiveWithAccumulatorTest.kt  # Tests con acumulador (5 tests, 11 casos)
+│       └── NumbersIterativeTest.kt              # Tests iterativos (5 tests, 11 casos)
 └── build/                                       # Generado por Gradle (no versionado)
 ```
 
@@ -57,9 +57,9 @@ numbers/
 | Accumulator recursion | `...Acc` | `fibonacciAcc(n)` | ✅ Yes (see TCO note) |
 | Iterative | `...Ite` | `fibonacciIte(n)` | ✅ Yes |
 
-**Combinación aplicada:** TCO ✅ + iteración ✅ → `_rec` + `_acc` + `_ite` = **33 pruebas**.
+**Combinación aplicada:** TCO ✅ + iteración ✅ → `_rec` + `_acc` + `_ite` = **3 suites × 5 tests = 15 tests (33 casos)**.
 
-**Applied combination:** TCO ✅ + iteration ✅ → `_rec` + `_acc` + `_ite` = **33 tests**.
+**Applied combination:** TCO ✅ + iteration ✅ → `_rec` + `_acc` + `_ite` = **3 suites × 5 tests = 15 tests (33 cases)**.
 
 ---
 
@@ -120,20 +120,26 @@ fun fibonacciIte(n: Int): Int {
 
 ### Suites de pruebas — Kotest
 
-**ES:** Tres suites `StringSpec`, una por enfoque, con los mismos 11 casos del pseudocódigo de la especificación (33 en total).
+**ES:** Tres suites `StringSpec`, una por enfoque. Cada suite agrupa un test por función (5 por suite); los 11 casos del pseudocódigo viven como aserciones dentro de ellos (33 casos en total).
 
-**EN:** Three `StringSpec` suites, one per approach, with the same 11 cases from the specification pseudocode (33 in total).
+**EN:** Three `StringSpec` suites, one per approach. Each suite groups one test per function (5 per suite); the specification pseudocode's 11 cases live as assertions within them (33 cases in total).
 
 ```kotlin
-"fibonacciRec(6) returns 8" {
+"fibonacciRec" {
+    Numbers.fibonacciRec(0) shouldBe 0
+    Numbers.fibonacciRec(1) shouldBe 1
     Numbers.fibonacciRec(6) shouldBe 8
 }
 
-"fibonacciAcc(6) returns 8" {
+"fibonacciAcc" {
+    Numbers.fibonacciAcc(0) shouldBe 0
+    Numbers.fibonacciAcc(1) shouldBe 1
     Numbers.fibonacciAcc(6) shouldBe 8
 }
 
-"fibonacciIte(6) returns 8" {
+"fibonacciIte" {
+    Numbers.fibonacciIte(0) shouldBe 0
+    Numbers.fibonacciIte(1) shouldBe 1
     Numbers.fibonacciIte(6) shouldBe 8
 }
 ```
@@ -169,13 +175,13 @@ BUILD SUCCESSFUL in 3s
 El reporte detallado queda en `build/test-results/test/`:
 
 ```text
-TEST-numbers.NumbersRecursiveTest.xml:                   tests="11" skipped="0" failures="0" errors="0"
-TEST-numbers.NumbersRecursiveWithAccumulatorTest.xml:    tests="11" skipped="0" failures="0" errors="0"
-TEST-numbers.NumbersIterativeTest.xml:                   tests="11" skipped="0" failures="0" errors="0"
+TEST-numbers.NumbersRecursiveTest.xml:                   tests="5" skipped="0" failures="0" errors="0"
+TEST-numbers.NumbersRecursiveWithAccumulatorTest.xml:    tests="5" skipped="0" failures="0" errors="0"
+TEST-numbers.NumbersIterativeTest.xml:                   tests="5" skipped="0" failures="0" errors="0"
 ```
 
-> **ES:** 33 pruebas en total: 11 casos por enfoque, todos pasando.
-> **EN:** 33 tests in total: 11 cases per approach, all passing.
+> **ES:** 15 tests en total (5 por suite); los 33 casos viven como aserciones dentro de ellos, todos pasando.
+> **EN:** 15 tests in total (5 per suite); the 33 cases live as assertions within them, all passing.
 
 ---
 
