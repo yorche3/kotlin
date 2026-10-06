@@ -37,26 +37,62 @@ class LinkedList {
 
     /** Valor de la cabeza, o -1 cuando la lista está vacía (`get_head`). */
     val headValue: Int
-        get() = -1
+        get() = head?.value ?: -1
 
     /** Informa si la lista no tiene nodos (`is_empty`). */
     val isEmpty: Boolean
-        get() = false
+        get() = head == null
 
     /** Número de nodos de la lista (`size`). */
     val size: Int
-        get() = 0
+        get() = count
 
     /** Inserta [value] al principio de la lista (`insert_head`). */
     fun insertHead(value: Int) {
+        val newNode = Node(value)
+        newNode.next = head
+        head = newNode
+        if (tail == null) {
+            tail = newNode
+        }
+        count++
     }
 
     /** Inserta [value] al final de la lista (`insert_tail`). */
     fun insertTail(value: Int) {
+        val newNode = Node(value)
+        if (tail != null) {
+            tail?.next = newNode
+        }
+        tail = newNode
+        if (head == null) {
+            head = newNode
+        }
+        count++
     }
 
     /** Elimina la primera aparición de [value] (`delete`): `false` cuando no está. */
-    fun delete(value: Int): Boolean = false
+    fun delete(value: Int): Boolean {
+        var current = head
+        var previous: Node? = null
+        while (current != null) {
+            if (current.value == value) {
+                if (previous == null) {
+                    head = current.next
+                } else {
+                    previous.next = current.next
+                }
+                if (current.next == null) {
+                    tail = previous
+                }
+                count--
+                return true
+            }
+            previous = current
+            current = current.next
+        }
+        return false
+    }
 }
 
 /**
@@ -70,22 +106,32 @@ class Stack {
 
     /** Valor del tope, o -1 cuando la pila está vacía (`peek`). */
     val topValue: Int
-        get() = -1
+        get() = top?.value ?: -1
 
     /** Informa si la pila no tiene nodos (`is_empty`). */
     val isEmpty: Boolean
-        get() = false
+        get() = top == null
 
     /** Número de nodos de la pila (`size`). */
     val size: Int
-        get() = 0
+        get() = count
 
     /** Apila [value] sobre el tope (`push`). */
     fun push(value: Int) {
+        val newNode = Node(value)
+        newNode.next = top
+        top = newNode
+        count++
     }
 
     /** Extrae el tope, o -1 cuando la pila está vacía (`pop`). */
-    fun pop(): Int = -1
+    fun pop(): Int {
+        if (top == null) return -1
+        val value = top!!.value
+        top = top!!.next
+        count--
+        return value
+    }
 }
 
 /**
@@ -100,20 +146,38 @@ class Queue {
 
     /** Valor del frente, o -1 cuando la cola está vacía (`peek`). */
     val frontValue: Int
-        get() = -1
+        get() = front?.value ?: -1
 
     /** Informa si la cola no tiene nodos (`is_empty`). */
     val isEmpty: Boolean
-        get() = false
+        get() = front == null
 
     /** Número de nodos de la cola (`size`). */
     val size: Int
-        get() = 0
+        get() = count
 
     /** Añade [value] por el final de la cola (`enqueue`). */
     fun enqueue(value: Int) {
+        val newNode = Node(value)
+        if (rear != null) {
+            rear?.next = newNode
+        }
+        rear = newNode
+        if (front == null) {
+            front = newNode
+        }
+        count++
     }
 
     /** Extrae el frente, o -1 cuando la cola está vacía (`dequeue`). */
-    fun dequeue(): Int = -1
+    fun dequeue(): Int {
+        if (front == null) return -1
+        val value = front!!.value
+        front = front!!.next
+        if (front == null) {
+            rear = null
+        }
+        count--
+        return value
+    }
 }
