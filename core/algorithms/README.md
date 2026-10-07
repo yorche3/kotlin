@@ -11,6 +11,7 @@ Los módulos de esta fase trabajan sobre `IntArray`, que en la JVM **es mutable*
 | Módulo | Especificación | Enfoque | Tests | Estado |
 |--------|---------------|---------|:-----:|:------:|
 | [`naive_sort/`](naive_sort/) | [05_Naive_Sort](https://yorche3.github.io/programming_languages/core/algorithms/05_Naive_Sort/) | `gradle test` + Kotest | 3 | ✅ |
+| [`data_structures_basics/`](data_structures_basics/) | [06_Data_Structures_Basics](https://yorche3.github.io/programming_languages/core/algorithms/06_Data_Structures_Basics/) | `gradle test` + JUnit 5 | 4 | ✅ |
 
 ---
 
@@ -18,16 +19,30 @@ Los módulos de esta fase trabajan sobre `IntArray`, que en la JVM **es mutable*
 
 ```text
 algorithms/
-└── naive_sort/                        # 05_Naive_Sort
-    ├── build.gradle.kts               # Plugin Kotlin JVM + dependencias de Kotest
-    ├── settings.gradle.kts            # rootProject.name = "naive_sort"
-    ├── gradle.properties              # Opciones de Gradle
-    ├── .gitignore                     # build/, .gradle/, bin/, .kotlin/
-    ├── src/
-    │   ├── main/kotlin/naive_sort/
-    │   │   └── NaiveSort.kt           # selectionSort, bubbleSort, insertionSort
-    │   └── test/kotlin/naive_sort/
-    │       └── NaiveSortTest.kt       # 3 tests × 8 casos
+├── naive_sort/                        # 05_Naive_Sort
+│   ├── build.gradle.kts               # Plugin Kotlin JVM + dependencias de Kotest
+│   ├── settings.gradle.kts            # rootProject.name = "naive_sort"
+│   ├── gradle.properties              # Opciones de Gradle
+│   ├── .gitignore                     # build/, .gradle/, bin/, .kotlin/
+│   ├── src/
+│   │   ├── main/kotlin/naive_sort/
+│   │   │   └── NaiveSort.kt           # selectionSort, bubbleSort, insertionSort
+│   │   └── test/kotlin/naive_sort/
+│   │       └── NaiveSortTest.kt       # 3 tests × 8 casos
+│   └── README.md
+└── data_structures_basics/            # 06_Data_Structures_Basics
+    ├── build.gradle.kts               # Configuración raíz de Gradle
+    ├── settings.gradle.kts            # Ajustes del proyecto multi-módulo
+    ├── gradle/                        # Wrapper y catálogo de versiones
+    ├── gradlew / gradlew.bat          # Scripts del wrapper de Gradle
+    ├── lib/
+    │   ├── build.gradle.kts           # Plugin Kotlin JVM + JUnit 5
+    │   └── src/
+    │       ├── main/kotlin/data_structures_basics/
+    │       │   └── DataStructuresBasics.kt   # Node, LinkedList, Stack, Queue
+    │       └── test/kotlin/data_structures_basics/
+    │           ├── DataStructuresBasicsTest.kt         # Pruebas unitarias
+    │           └── DataStructuresBasicsBehaviorTest.kt # Escenarios encadenados
     └── README.md
 ```
 
@@ -58,6 +73,10 @@ algorithms/
 # Naive Sort Tests
 cd naive_sort
 gradle test
+
+# Data Structures Basics Tests
+cd data_structures_basics
+./gradlew test
 ```
 
 ---
