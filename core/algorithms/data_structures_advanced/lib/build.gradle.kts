@@ -19,11 +19,9 @@ repositories {
 }
 
 dependencies {
-    // Use the Kotlin Test integration.
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-
-    // Use the JUnit 5 integration.
-    testImplementation(libs.junit.jupiter.engine)
+    // Use the Kotest testing and specification framework over the JUnit Platform.
+    testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.kotest.assertions.core)
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
