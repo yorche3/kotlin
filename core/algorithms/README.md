@@ -12,6 +12,7 @@ Los módulos de esta fase trabajan sobre `IntArray`, que en la JVM **es mutable*
 |--------|---------------|---------|:-----:|:------:|
 | [`naive_sort/`](naive_sort/) | [05_Naive_Sort](https://yorche3.github.io/programming_languages/core/algorithms/05_Naive_Sort/) | `gradle test` + Kotest | 3 | ✅ |
 | [`data_structures_basics/`](data_structures_basics/) | [06_Data_Structures_Basics](https://yorche3.github.io/programming_languages/core/algorithms/06_Data_Structures_Basics/) | `gradle test` + JUnit 5 | 4 | ✅ |
+| [`data_structures_advanced/`](data_structures_advanced/) | [07_Data_Structures_Advanced](https://yorche3.github.io/programming_languages/core/algorithms/07_Data_Structures_Advanced/) | `./gradlew test` + Kotest | 23 | ✅ |
 
 ---
 
@@ -30,7 +31,7 @@ algorithms/
 │   │   └── test/kotlin/naive_sort/
 │   │       └── NaiveSortTest.kt       # 3 tests × 8 casos
 │   └── README.md
-└── data_structures_basics/            # 06_Data_Structures_Basics
+├── data_structures_basics/            # 06_Data_Structures_Basics
     ├── build.gradle.kts               # Configuración raíz de Gradle
     ├── settings.gradle.kts            # Ajustes del proyecto multi-módulo
     ├── gradle/                        # Wrapper y catálogo de versiones
@@ -43,6 +44,19 @@ algorithms/
     │       └── test/kotlin/data_structures_basics/
     │           ├── DataStructuresBasicsTest.kt         # Pruebas unitarias
     │           └── DataStructuresBasicsBehaviorTest.kt # Escenarios encadenados
+    └── README.md
+└── data_structures_advanced/          # 07_Data_Structures_Advanced
+    ├── settings.gradle.kts            # Ajustes del proyecto multi-módulo
+    ├── gradle.properties              # Opciones del entorno Gradle
+    ├── gradle/                        # Wrapper y catálogo de versiones
+    ├── gradlew / gradlew.bat          # Scripts del wrapper de Gradle
+    ├── lib/
+    │   ├── build.gradle.kts           # Plugin Kotlin JVM + Kotest
+    │   └── src/
+    │       ├── main/kotlin/data_structures_advanced/
+    │       │   └── DataStructuresAdvanced.kt   # Node, TreeNode, BinaryTree, GraphNode, Graph
+    │       └── test/kotlin/data_structures_advanced/
+    │           └── DataStructuresAdvancedTest.kt # 23 tests con Kotest
     └── README.md
 ```
 
@@ -76,6 +90,10 @@ gradle test
 
 # Data Structures Basics Tests
 cd data_structures_basics
+./gradlew test
+
+# Data Structures Advanced Tests
+cd data_structures_advanced
 ./gradlew test
 ```
 
